@@ -1,0 +1,9 @@
+POST http://localhost:3000/api/register
+Content-Type: application/json
+
+{
+  "first": "running",
+  "last": "water",
+  "email": "Rw@test.com",
+  "name": "asdkbmjfjf"
+}
