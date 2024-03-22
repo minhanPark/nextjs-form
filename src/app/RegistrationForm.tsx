@@ -1,7 +1,10 @@
 "use client";
 
+import { useFormState } from "react-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef } from "react";
+
 import { schema } from "./registrationSchema";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -18,13 +21,29 @@ import {
 
 export const RegistrationForm = ({
   onDataAction,
+  onFormAction,
 }: {
   onDataAction: (data: z.infer<typeof schema>) => Promise<{
     message: string;
     user?: z.infer<typeof schema>;
     issues?: string[];
   }>;
+  onFormAction: (
+    prevState: {
+      message: string;
+      user?: z.infer<typeof schema>;
+      issues?: string[];
+    },
+    data: FormData
+  ) => Promise<{
+    message: string;
+    user?: z.infer<typeof schema>;
+    issues?: string[];
+  }>;
 }) => {
+  const [state, formAction] = useFormState(onFormAction, {
+    message: "",
+  });
   const form = useForm<z.infer<typeof schema>>({
     defaultValues: {
       first: "",
@@ -56,12 +75,23 @@ export const RegistrationForm = ({
     // })
     //   .then((response) => response.json())
     //   .then((data) => console.log(data));
-    console.log(await onDataAction(data));
+    // console.log(await onDataAction(data));
+    // const formData = new FormData();
+    // formData.append("first", data.first);
+    // formData.append("last", data.last);
+    // formData.append("email", data.email);
+    // console.log(await onFormAction(formData));
   };
-
+  const formRef = useRef<HTMLFormElement>(null);
   return (
     <Form {...form}>
-      <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <div className="">{state?.message}</div>
+      <form
+        ref={formRef}
+        className="space-y-8"
+        onSubmit={form.handleSubmit(() => formRef?.current?.submit())}
+        action={formAction}
+      >
         <div className="flex gap-2">
           <FormField
             control={form.control}
