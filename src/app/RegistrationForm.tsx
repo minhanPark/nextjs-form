@@ -27,12 +27,25 @@ export const RegistrationForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof schema>) => {
-    fetch("/api/register", {
+    /** api - json 방식 */
+    // fetch("/api/register", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data));
+    const formData = new FormData();
+    formData.append("first", data.first);
+    formData.append("last", data.last);
+    formData.append("email", data.email);
+
+    fetch("/api/registerForm", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      body: formData,
+      // Content-Type은 FormData가 기본값이라 보낼 필요 없음
     })
       .then((response) => response.json())
       .then((data) => console.log(data));
