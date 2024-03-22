@@ -49,6 +49,7 @@ export const RegistrationForm = ({
       first: "",
       last: "",
       email: "",
+      zipCode: "",
     },
     resolver: zodResolver(schema),
   });
@@ -136,7 +137,20 @@ export const RegistrationForm = ({
             </FormItem>
           )}
         />
-
+        <FormField
+          control={form.control}
+          name="zipCode"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Zip code</FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} />
+              </FormControl>
+              <FormDescription>Your zip code.</FormDescription>
+              <FormMessage /> *
+            </FormItem>
+          )}
+        />
         <Button type="submit">Submit</Button>
       </form>
     </Form>
