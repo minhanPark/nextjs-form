@@ -16,7 +16,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-export const RegistrationForm = () => {
+export const RegistrationForm = ({
+  onDataAction,
+}: {
+  onDataAction: (data: z.infer<typeof schema>) => Promise<{
+    message: string;
+    user?: z.infer<typeof schema>;
+    issues?: string[];
+  }>;
+}) => {
   const form = useForm<z.infer<typeof schema>>({
     defaultValues: {
       first: "",
@@ -37,18 +45,18 @@ export const RegistrationForm = () => {
     // })
     //   .then((response) => response.json())
     //   .then((data) => console.log(data));
-    const formData = new FormData();
-    formData.append("first", data.first);
-    formData.append("last", data.last);
-    formData.append("email", data.email);
-
-    fetch("/api/registerForm", {
-      method: "POST",
-      body: formData,
-      // Content-Type은 FormData가 기본값이라 보낼 필요 없음
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    // const formData = new FormData();
+    // formData.append("first", data.first);
+    // formData.append("last", data.last);
+    // formData.append("email", data.email);
+    // fetch("/api/registerForm", {
+    //   method: "POST",
+    //   body: formData,
+    //   // Content-Type은 FormData가 기본값이라 보낼 필요 없음
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data));
+    console.log(await onDataAction(data));
   };
 
   return (
