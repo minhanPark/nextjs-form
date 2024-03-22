@@ -69,6 +69,7 @@ export const RegistrationForm = ({
     // formData.append("first", data.first);
     // formData.append("last", data.last);
     // formData.append("email", data.email);
+    // formData.append("zipCode", data.zipCode);
     // fetch("/api/registerForm", {
     //   method: "POST",
     //   body: formData,
@@ -90,6 +91,7 @@ export const RegistrationForm = ({
       <form
         ref={formRef}
         className="space-y-8"
+        //onSubmit={form.handleSubmit(onSubmit)}
         onSubmit={form.handleSubmit(() => formRef?.current?.submit())}
         action={formAction}
       >

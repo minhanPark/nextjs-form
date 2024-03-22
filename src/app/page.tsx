@@ -6,7 +6,7 @@ import { schema } from "./registrationSchema";
 export default function Home() {
   const onDataAction = async (data: z.infer<typeof schema>) => {
     "use server";
-    const parsed = schema.safeParse(data);
+    const parsed = await schema.safeParseAsync(data);
 
     if (parsed.success) {
       console.log("User registered");

@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   const formData = await req.formData(); // form 데이터를 얻는다
   const data = Object.fromEntries(formData); // form 데이터를 객체로 변환한다.
 
-  let parsed = schema.safeParse(data);
+  let parsed = await schema.safeParseAsync(data);
   if (parsed.success) {
     return NextResponse.json({ message: "User registered", data: parsed.data });
   } else {
